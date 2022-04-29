@@ -13,9 +13,45 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function transform(arr) {
+  const discardNext = '--discard-next'
+  const discardPrev = '--discard-prev'
+  const doubleNext = '--double-next'
+  const doublePrev = '--double-prev'
+
+  let transArr = [];
+  if (Array.isArray(arr)) {
+    
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i - 1] === undefined && arr[i] === discardPrev || arr[i - 1] === undefined && arr[i] === doublePrev || arr[i + 1] === undefined && arr[i] === discardNext || arr[i + 1] === undefined && arr[i] === doubleNext) {
+        transArr.push()
+      }
+
+      else if(arr[i] === doublePrev && arr[i - 2] === discardNext || arr[i] === discardPrev && arr[i - 2] === discardNext){
+        transArr.push()
+      }
+
+      else if (arr[i] === discardNext) {
+        i++
+      }
+      else if (arr[i] === discardPrev) {
+        transArr.pop();
+      }
+      else if (arr[i] === doubleNext) {
+        transArr.push(arr[i + 1])
+      }
+      else if (arr[i] === doublePrev) {
+        transArr.push(arr[i - 1]);
+      }
+      else {
+        transArr.push(arr[i]);
+      }
+      
+    }
+  }else {
+    throw new Error("'arr' parameter must be an instance of the Array!")
+  }
+  return transArr;
 }
 
 module.exports = {
